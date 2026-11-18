@@ -3,10 +3,9 @@
  * Использование (Tailwind v3):
  *   // tailwind.config.js
  *   const brandbook = require('./brandbook/tailwind.preset.js');
- *   module.exports = { presets: [brandbook], content: ['./src/**/*.{ts,tsx,html}'] };
+ *   module.exports = { presets: [brandbook], content: ['./src/PATTERNS'] }; // см. README
  * Tailwind v4: вместо конфига — @import 'tokens.css' и theme inline.
  */
-const withVar = (name) => `rgb(var(${name}) / <alpha-value>)`;
 
 module.exports = {
   darkMode: ['selector', '[data-theme="dark"]'],
