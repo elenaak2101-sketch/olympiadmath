@@ -1,0 +1,154 @@
+/* ============================================================
+   MathFinder Design Tokens  v0.1
+   Продукт: локальный поиск задач по темам в PDF-сборниках
+   Референсы: math-olymp.rudn.ru (фиолетовый + оранжевый)
+              do.bmstu.ru (синий, Gilroy, скругления 5/10/40)
+   Шрифт-замена для веба и мобилы: Inter (близок к TildaSans/Gilroy)
+   ============================================================ */
+
+:root {
+  /* ---------- Brand: Violet (основной, из RUDN) ---------- */
+  --violet-50:  #f4f1fe;
+  --violet-100: #e9e3fd;
+  --violet-200: #d4c9fa;
+  --violet-300: #b7a4f4;
+  --violet-400: #9a83ec;
+  --violet-500: #7c64dd;   /* ← ключевой цвет RUDN */
+  --violet-600: #6a4fd0;
+  --violet-700: #573fb0;
+  --violet-800: #46338c;
+  --violet-900: #382a6e;
+
+  /* ---------- Accent: Orange (из RUDN, CTA / подсветка находок) ---------- */
+  --orange-50:  #fff6ec;
+  --orange-100: #ffe9d1;
+  --orange-200: #ffd2a3;
+  --orange-300: #ffaf60;   /* ← ключевой акцент RUDN */
+  --orange-400: #fb9430;
+  --orange-500: #e07d01;   /* ← акцент BMSTU */
+  --orange-600: #b96500;
+  --orange-700: #8f4e00;
+
+  /* ---------- Secondary: Blue (синяя линия BMSTU, ссылки/второй уровень) ---------- */
+  --blue-50:  #eaf3fb;
+  --blue-100: #d3e5f6;
+  --blue-200: #a8caec;
+  --blue-300: #6ea9df;
+  --blue-400: #3587cf;
+  --blue-500: #065bab;   /* ← основной синий BMSTU */
+  --blue-600: #004e9f;
+  --blue-700: #003d7d;
+  --blue-800: #002d5c;
+  --blue-900: #001f40;
+
+  /* ---------- Neutral (серые) ---------- */
+  --gray-0:   #ffffff;
+  --gray-25:  #fafafa;   /* фон страниц BMSTU */
+  --gray-50:  #f5f5f7;
+  --gray-100: #eeeef1;
+  --gray-200: #e2e2e8;
+  --gray-300: #c9c9c9;   /* ← из RUDN, бордеры */
+  --gray-400: #a3a3ad;
+  --gray-500: #7a7a85;
+  --gray-600: #55555f;
+  --gray-700: #3a3a42;
+  --gray-800: #232329;
+  --gray-900: #141418;
+
+  /* ---------- Semantic ---------- */
+  --green-100: #caf4e3;   /* из BMSTU */
+  --green-500: #17976a;
+  --green-700: #0d6b4a;
+  --red-100:   #ffcdcd;   /* из BMSTU */
+  --red-500:   #d92d20;
+  --red-700:   #ad0000;   /* из BMSTU */
+  --yellow-100:#ffefcd;   /* из BMSTU */
+  --yellow-500:#c98a00;
+
+  /* ---------- Семантические алиасы (светлая тема) ---------- */
+  --bg-page:        var(--gray-25);
+  --bg-surface:     var(--gray-0);
+  --bg-surface-2:   var(--gray-50);
+  --bg-inverse:     var(--gray-900);
+  --text-primary:   var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary:  var(--gray-500);
+  --text-on-brand:  #ffffff;
+  --border-default: var(--gray-200);
+  --border-strong:  var(--gray-300);
+  --brand:          var(--violet-500);
+  --brand-hover:    var(--violet-600);
+  --brand-soft:     var(--violet-50);
+  --accent:         var(--orange-300);
+  --link:           var(--blue-500);
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Inter", "TildaSans", "Gilroy", -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace; /* id задач, page ranges */
+
+  --text-xs:   0.75rem;  /* 12 — лейблы, бейджи */
+  --text-sm:   0.875rem; /* 14 — вторичный текст */
+  --text-base: 1rem;     /* 16 — body */
+  --text-lg:   1.125rem; /* 18 — крупные карточки */
+  --text-xl:   1.25rem;  /* 20 — H4 */
+  --text-2xl:  1.5rem;   /* 24 — H3 */
+  --text-3xl:  1.875rem; /* 30 — H2 */
+  --text-4xl:  2.25rem;  /* 36 — H1 страницы */
+  --text-5xl:  clamp(2.25rem, 5vw, 3.5rem); /* hero */
+
+  --leading-tight:  1.2;
+  --leading-normal: 1.55;
+  --tracking-h: -0.02em; /* Gilroy/TildaSans любят слегка отрицательный трекинг */
+
+  /* ---------- Spacing (4px scale) ---------- */
+  --sp-0: 0;     --sp-1: 4px;   --sp-2: 8px;   --sp-3: 12px;
+  --sp-4: 16px;  --sp-5: 20px;  --sp-6: 24px;  --sp-8: 32px;
+  --sp-10: 40px; --sp-12: 48px; --sp-16: 64px; --sp-20: 80px; --sp-24: 96px;
+
+  /* ---------- Radius (BMSTU: 5 / 10 / 40) ---------- */
+  --r-sm:   6px;   /* инпуты, чипы-теги */
+  --r-md:   10px;  /* карточки */
+  --r-lg:   16px;  /* крупные панели, hero */
+  --r-pill: 999px; /* кнопки-пилюли, фильтры тем */
+  --r-full: 50%;
+
+  /* ---------- Shadows ---------- */
+  --shadow-xs: 0 1px 2px rgba(20,20,24,.06);
+  --shadow-sm: 0 1px 3px rgba(20,20,24,.08), 0 1px 2px rgba(20,20,24,.05);
+  --shadow-md: 0 4px 12px rgba(20,20,24,.09);
+  --shadow-lg: 0 12px 32px rgba(20,20,24,.13);
+  --shadow-focus: 0 0 0 3px color-mix(in srgb, var(--brand) 30%, transparent);
+
+  /* ---------- Motion ---------- */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --ease: cubic-bezier(.2,.7,.3,1);
+
+  /* ---------- Layout ---------- */
+  --container: 1200px;
+  --header-h: 64px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* ---------- Тёмная тема (для вечерней работы тренеров) ---------- */
+[data-theme="dark"] {
+  --bg-page:        #101014;
+  --bg-surface:     #1a1a20;
+  --bg-surface-2:   #22222a;
+  --text-primary:   #f2f2f5;
+  --text-secondary: #b4b4bf;
+  --text-tertiary:  #85858f;
+  --border-default: #2e2e38;
+  --border-strong:  #3d3d48;
+  --brand:          var(--violet-400);
+  --brand-hover:    var(--violet-300);
+  --brand-soft:     rgba(124,100,221,.16);
+  --link:           var(--blue-300);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5);
+  --shadow-md: 0 4px 14px rgba(0,0,0,.55);
+  --shadow-lg: 0 14px 36px rgba(0,0,0,.6);
+}

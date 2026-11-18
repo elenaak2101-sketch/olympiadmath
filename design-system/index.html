@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathFinder — Design System v0.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* только для страницы-гада */
+  .ds-title { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .swatches { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; }
+  .swatch { border-radius:10px; overflow:hidden; border:1px solid var(--border-default); background:var(--bg-surface); font-size:12px; }
+  .swatch i { display:block; height:56px; }
+  .swatch b, .swatch span { display:block; padding:4px 10px; font-weight:600; font-style:normal; }
+  .swatch span { color:var(--text-tertiary); font-family:var(--font-mono); padding-top:0; }
+  .type-row { display:flex; align-items:baseline; gap:20px; padding:10px 0; border-bottom:1px dashed var(--border-default); }
+  .type-row code { min-width:150px; color:var(--text-tertiary); font-size:12px; }
+  .demo-panel { border:1px solid var(--border-default); border-radius:16px; padding:28px; background:var(--bg-surface); margin-bottom:20px; }
+  .demo-label { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-tertiary); font-weight:700; margin-bottom:16px; }
+  footer a { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+  <div class="container">
+    <a class="brand" href="#"><span class="brand-mark">∑</span> MathFinder<span class="badge badge-info" style="margin-left:8px">DS v0.1</span></a>
+    <nav class="nav-links">
+      <a class="nav-link is-active" href="#colors">Палитра</a>
+      <a class="nav-link" href="#type">Типографика</a>
+      <a class="nav-link" href="#components">Компоненты</a>
+      <a class="nav-link" href="#screens">Экраны</a>
+    </nav>
+    <button class="btn btn-ghost btn-icon" id="themeToggle" title="Тёмная тема" aria-label="Переключить тему">🌗</button>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ================= HERO ================= -->
+<section class="section">
+  <div class="hero">
+    <h1>Дизайн-система для поиска задач в PDF-сборниках</h1>
+    <p>Стиль извлечён из референсов: фиолетовый + оранжевый (math-olymp.rudn.ru), синяя академичность и скругления (do.bmstu.ru). Веб-first, готов к переносу в мобильное приложение.</p>
+    <div class="row" style="margin-top:24px">
+      <button class="btn btn-accent btn-lg">Загрузить сборник</button>
+      <button class="btn btn-lg" style="background:rgba(255,255,255,.15);color:#fff">Как это работает</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLORS ================= -->
+<section class="section" id="colors" style="padding-top:0">
+  <h2>Цвета</h2>
+  <p class="text-muted" style="max-width:70ch">Brand-violet — основной цвет действий и навигации. Orange — акцент для CTA и подсветки совпадений. Blue — ссылки, вторичные статусы, отсылка к «синей линии» Бауманки. Все цвета доступны как CSS-токены и токены для Figma / iOS / Android.</p>
+
+  <div class="demo-panel">
+    <div class="demo-label">Brand · Violet (RUDN)</div>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#f4f1fe"></i><b>violet-50</b><span>#F4F1FE</span></div>
+      <div class="swatch"><i style="background:#d4c9fa"></i><b>violet-200</b><span>#D4C9FA</span></div>
+      <div class="swatch"><i style="background:#9a83ec"></i><b>violet-400</b><span>#9A83EC</span></div>
+      <div class="swatch"><i style="background:#7c64dd"></i><b>violet-500 ★</b><span>#7C64DD</span></div>
+      <div class="swatch"><i style="background:#573fb0"></i><b>violet-700</b><span>#573FB0</span></div>
+      <div class="swatch"><i style="background:#382a6e"></i><b>violet-900</b><span>#382A6E</span></div>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Accent · Orange (RUDN / BMSTU)</div>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#fff6ec"></i><b>orange-50</b><span>#FFF6EC</span></div>
+      <div class="swatch"><i style="background:#ffd2a3"></i><b>orange-200</b><span>#FFD2A3</span></div>
+      <div class="swatch"><i style="background:#ffaf60"></i><b>orange-300 ★</b><span>#FFAF60</span></div>
+      <div class="swatch"><i style="background:#e07d01"></i><b>orange-500</b><span>#E07D01</span></div>
+      <div class="swatch"><i style="background:#8f4e00"></i><b>orange-700</b><span>#8F4E00</span></div>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Secondary · Blue (BMSTU)</div>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#eaf3fb"></i><b>blue-50</b><span>#EAF3FB</span></div>
+      <div class="swatch"><i style="background:#6ea9df"></i><b>blue-300</b><span>#6EA9DF</span></div>
+      <div class="swatch"><i style="background:#065bab"></i><b>blue-500 ★</b><span>#065BAB</span></div>
+      <div class="swatch"><i style="background:#003d7d"></i><b>blue-700</b><span>#003D7D</span></div>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Neural & Semantic</div>
+    <div class="swatches">
+      <div class="swatch"><i style="background:#fafafa;border-bottom:1px solid #e2e2e8"></i><b>gray-25 · фон</b><span>#FAFAFA</span></div>
+      <div class="swatch"><i style="background:#c9c9c9"></i><b>gray-300 · бордер</b><span>#C9C9C9</span></div>
+      <div class="swatch"><i style="background:#141418"></i><b>gray-900 · текст</b><span>#141418</span></div>
+      <div class="swatch"><i style="background:#17976a"></i><b>green · успех</b><span>#17976A</span></div>
+      <div class="swatch"><i style="background:#c98a00"></i><b>yellow · внимание</b><span>#C98A00</span></div>
+      <div class="swatch"><i style="background:#ad0000"></i><b>red · ошибка</b><span>#AD0000</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TYPOGRAPHY ================= -->
+<section class="section" id="type" style="padding-top:0">
+  <h2>Типографика</h2>
+  <p class="text-muted">Референсы используют TildaSans (RUDN) и Gilroy (BMSTU) — геометрические гротески с плотными заголовками. Бесплатный кроссплатформенный аналог с кириллицей — <b>Inter</b>; для ID задач и номеров страниц — <b>JetBrains Mono</b>.</p>
+  <div class="demo-panel">
+    <div class="type-row"><code>--text-5xl / hero</code><span style="font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.15">Найдите задачу за секунды</span></div>
+    <div class="type-row"><code>--text-4xl / h1</code><span style="font-size:var(--text-4xl);font-weight:800;letter-spacing:-.02em">Загрузка сборника</span></div>
+    <div class="type-row"><code>--text-3xl / h2</code><span style="font-size:var(--text-3xl);font-weight:700;letter-spacing:-.02em">Результаты поиска</span></div>
+    <div class="type-row"><code>--text-2xl / h3</code><span style="font-size:var(--text-2xl);font-weight:700;letter-spacing:-.02em">Неравенства</span></div>
+    <div class="type-row"><code>--text-base / body</code><span>Докажите, что для любых положительных a, b, c выполняется неравенство…</span></div>
+    <div class="type-row"><code>--text-sm / secondary</code><span class="text-sm text-muted">Сборник «Задачи по математическому анализу», ИТМО, 2019 — 214 стр.</span></div>
+    <div class="type-row" style="border:0"><code>--text-xs / mono</code><span class="mono text-muted">prob_8f2ac1 · p. 137–138</span></div>
+  </div>
+</section>
+
+<!-- ================= COMPONENTS ================= -->
+<section class="section" id="components" style="padding-top:0">
+  <h2>Компоненты</h2>
+
+  <div class="demo-panel">
+    <div class="demo-label">Кнопки</div>
+    <div class="row">
+      <button class="btn btn-primary">Найти задачи</button>
+      <button class="btn btn-accent">Загрузить PDF</button>
+      <button class="btn btn-outline">Фильтры</button>
+      <button class="btn btn-ghost">Сбросить</button>
+      <button class="btn btn-danger">Удалить индекс</button>
+      <button class="btn btn-primary" disabled>Индексация…</button>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn btn-primary btn-lg">Большая</button>
+      <button class="btn btn-primary">Обычная</button>
+      <button class="btn btn-primary btn-sm">Маленькая</button>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Поиск — центральный элемент UI</div>
+    <div class="searchbar" style="max-width:640px">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input class="input" placeholder="Неравенство Коши для трёх переменных…">
+    </div>
+    <div class="row" style="margin-top:16px">
+      <span class="chip is-selected">Неравенства</span>
+      <span class="chip">Комбинаторика</span>
+      <span class="chip">Теория чисел</span>
+      <span class="chip">Функциональные уравнения</span>
+      <span class="chip">Геометрия</span>
+      <span class="chip chip-neutral">+ 12 тем</span>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Карточка задачи (результат поиска)</div>
+    <div class="grid grid-2">
+      <article class="card card-hover problem">
+        <div class="problem-head">
+          <span class="problem-title">№ 4.37</span>
+          <span class="badge badge-medium">Средняя</span>
+          <span class="page-ref">стр. 137</span>
+        </div>
+        <p class="problem-excerpt">Докажите <mark>неравенство Коши</mark>: для любых положительных x, y, z выполнено (x+y)(y+z)(z+x) ≥ 8xyz…</p>
+        <div class="problem-foot">
+          <span class="chip">Неравенства</span>
+          <span class="chip chip-neutral">Алгебра</span>
+          <span class="problem-id">· Сборник Кузнецова, 2019</span>
+        </div>
+        <div class="row"><button class="btn btn-outline btn-sm">Открыть в PDF</button><button class="btn btn-ghost btn-sm">В подборку ＋</button></div>
+      </article>
+
+      <article class="card card-hover problem">
+        <div class="problem-head">
+          <span class="problem-title">№ 112</span>
+          <span class="badge badge-hard">Сложная</span>
+          <span class="page-ref">стр. 89</span>
+        </div>
+        <p class="problem-excerpt">Найдите все <mark>функциональные уравнения</mark> f: ℝ→ℝ, удовлетворяющие f(x+f(y)) = y+f(x) для всех…</p>
+        <div class="problem-foot">
+          <span class="chip">Функциональные уравнения</span>
+          <span class="chip chip-neutral">Олимпиада Мехмат, 2021</span>
+        </div>
+        <div class="row"><button class="btn btn-outline btn-sm">Открыть в PDF</button><button class="btn btn-ghost btn-sm">В подборку ＋</button></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Загрузка и индексация PDF</div>
+    <div class="dropzone" style="max-width:640px">
+      <div class="dropzone-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+      </div>
+      <b>Перетащите PDF-сборник сюда</b><br>
+      <span class="text-sm">или нажмите, чтобы выбрать файл · до 200 МБ · текст распознается локально</span>
+    </div>
+    <div style="max-width:640px;margin-top:20px">
+      <div class="row" style="justify-content:space-between;width:100%">
+        <span class="text-sm"><b>kuznetsov_ineq_2019.pdf</b> · 214 стр.</span>
+        <span class="badge badge-info">Индексация · 68%</span>
+      </div>
+      <div class="progress" style="margin-top:8px"><span style="width:68%"></span></div>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Статусы · бейджи · алерты</div>
+    <div class="row" style="margin-bottom:16px">
+      <span class="badge badge-easy">● Индекс готов</span>
+      <span class="badge badge-info">⟳ Индексация</span>
+      <span class="badge badge-accent">★ В подборке</span>
+      <span class="badge badge-hard">⚠ Слабое OCR-качество</span>
+    </div>
+    <div class="stack">
+      <div class="alert alert-success">✓ 312 задач извлечено и размечено по темам.</div>
+      <div class="alert alert-warning">⚠ Страницы 40–47 распознаны частично: проверьте ручную разметку тем.</div>
+      <div class="alert alert-error">✕ Файл защищён паролем — индексация невозможна.</div>
+    </div>
+  </div>
+
+  <div class="demo-panel">
+    <div class="demo-label">Таблица сборников · сегмент-контрол · skeleton</div>
+    <div class="segmented" style="margin-bottom:16px">
+      <button class="is-active">Все</button><button>Мои</button><button>Избранное</button>
+    </div>
+    <table class="table">
+      <thead><tr><th>Сборник</th><th>Темы</th><th>Задачи</th><th>Статус</th></tr></thead>
+      <tbody>
+        <tr><td><b>Задачи по матанализу</b> · ИТМО 2019</td><td class="mono">14</td><td class="mono">1 208</td><td><span class="badge badge-easy">Готов</span></td></tr>
+        <tr><td><b>Олимпиадная комбинаторика</b> · МФТИ</td><td class="mono">7</td><td class="mono">486</td><td><span class="badge badge-easy">Готов</span></td></tr>
+        <tr><td><b>Сборник Рудной</b> · RUDN 2023</td><td class="mono">—</td><td class="mono">—</td><td><span class="badge badge-info">Индексация…</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;max-width:520px">
+      <div class="skeleton" style="height:16px;width:80%"></div>
+      <div class="skeleton" style="height:16px;width:55%"></div>
+      <div class="skeleton" style="height:16px;width:70%"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREENS ================= -->
+<section class="section" id="screens" style="padding-top:0">
+  <h2>Принципы экранов</h2>
+  <div class="grid grid-3">
+    <div class="card"><h4>1 · Поиск</h4><p class="text-sm text-muted">Главный экран: крупная строка поиска + чипы тем. Результаты — карточки задач с подсветкой совпадений и ссылкой на страницу PDF.</p></div>
+    <div class="card"><h4>2 · Сборники</h4><p class="text-sm text-muted">Dropzone сверху, таблица индексируемых PDF со статусами. Операции над файлом — ghost-кнопки, опасные — красные.</p></div>
+    <div class="card"><h4>3 · Подборки</h4><p class="text-sm text-muted">Тренер собирает листы задач в подборки для занятий; экспорт в PDF. Акцентный оранжевый — только для «Создать подборку».</p></div>
+  </div>
+  <div class="demo-panel" style="margin-top:20px">
+    <div class="demo-label">Правила стиля</div>
+    <ul class="text-sm" style="line-height:2;margin:0;padding-left:20px">
+      <li>Один primary-фиолетовый на экран; оранжевый — максимум одна акцентная кнопка.</li>
+      <li>Скругления: поля 6px, карточки 10px, hero/панели 16px, кнопки и чипы — pill.</li>
+      <li>Номера страниц и ID задач всегда моноширинным шрифтом — их копируют в конспекты.</li>
+      <li>Touch-target ≥ 44px сразу (мобильная версия наследует веб-компоненты).</li>
+      <li>Контраст текста ≥ 4.5:1; тёмная тема — через алиасы, не хардкод цветов.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container row" style="justify-content:space-between">
+    <span>MathFinder DS v0.1 · токены: <span class="mono">design-system/tokens.css</span> · компоненты: <span class="mono">components.css</span></span>
+    <a href="https://math-olymp.rudn.ru/" target="_blank">ref: RUDN</a> · <a href="https://do.bmstu.ru/" target="_blank">ref: БМТУ</a>
+  </div>
+</footer>
+
+<script>
+  const t = document.getElementById('themeToggle');
+  t.addEventListener('click', () => {
+    const d = document.documentElement;
+    d.dataset.theme = d.dataset.theme === 'dark' ? '' : 'dark';
+  });
+  // демо интерактива чипов
+  document.querySelectorAll('.chip:not(.chip-neutral)').forEach(c =>
+    c.addEventListener('click', () => c.classList.toggle('is-selected')));
+</script>
+</body>
+</html>
