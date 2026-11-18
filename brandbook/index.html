@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathFinder — Брендбук v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MathFinder Brandbook — самодостаточный файл (токены инлайном)
+   Источник токенов: ../design-system/tokens.css  (не дублировать вручную — синхронизировано v0.1)
+   ============================================================ */
+:root{
+  --violet-50:#f4f1fe;--violet-100:#e9e3fd;--violet-200:#d4c9fa;--violet-300:#b7a4f4;--violet-400:#9a83ec;
+  --violet-500:#7c64dd;--violet-600:#6a4fd0;--violet-700:#573fb0;--violet-800:#46338c;--violet-900:#382a6e;
+  --orange-50:#fff6ec;--orange-100:#ffe9d1;--orange-200:#ffd2a3;--orange-300:#ffaf60;--orange-400:#fb9430;
+  --orange-500:#e07d01;--orange-600:#b96500;--orange-700:#8f4e00;
+  --blue-50:#eaf3fb;--blue-100:#d3e5f6;--blue-200:#a8caec;--blue-300:#6ea9df;--blue-400:#3587cf;
+  --blue-500:#065bab;--blue-600:#004e9f;--blue-700:#003d7d;--blue-800:#002d5c;--blue-900:#001f40;
+  --gray-0:#fff;--gray-25:#fafafa;--gray-50:#f5f5f7;--gray-100:#eeeef1;--gray-200:#e2e2e8;--gray-300:#c9c9c9;
+  --gray-400:#a3a3ad;--gray-500:#7a7a85;--gray-600:#55555f;--gray-700:#3a3a42;--gray-800:#232329;--gray-900:#141418;
+  --green-100:#caf4e3;--green-500:#17976a;--red-100:#ffcdcd;--red-500:#d92d20;--yellow-100:#ffefcd;--yellow-500:#c98a00;
+  --font-sans:"Inter","TildaSans","Gilroy",-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-mono:"JetBrains Mono","SF Mono",Consolas,monospace;
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:20px;--sp-6:24px;--sp-8:32px;--sp-10:40px;--sp-12:48px;--sp-16:64px;--sp-20:80px;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-pill:999px;
+  --shadow-sm:0 1px 3px rgba(20,20,24,.08);--shadow-md:0 4px 12px rgba(20,20,24,.09);--shadow-lg:0 12px 32px rgba(20,20,24,.13);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-sans);font-size:16px;line-height:1.55;color:var(--gray-900);background:var(--gray-25);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0 0 var(--sp-4);line-height:1.2;letter-spacing:-.02em;font-weight:800}
+h1{font-size:clamp(2rem,5vw,3.25rem)}h2{font-size:1.875rem}h3{font-size:1.25rem}
+p{margin:0 0 var(--sp-4)}
+code,.mono{font-family:var(--font-mono)}
+code{background:var(--gray-100);padding:.1em .4em;border-radius:5px;font-size:.875em;color:var(--violet-700)}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:var(--sp-5)}
+
+/* ---------- навигация брендбука ---------- */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-200)}
+.topbar .wrap{display:flex;align-items:center;gap:var(--sp-2);height:56px;overflow-x:auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;white-space:nowrap;margin-right:var(--sp-4)}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--violet-500),var(--blue-500));color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800}
+.topbar a.toc{padding:6px 12px;border-radius:var(--r-pill);font-size:13px;font-weight:600;color:var(--gray-600);text-decoration:none;white-space:nowrap}
+.topbar a.toc:hover{background:var(--violet-50);color:var(--violet-700)}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,var(--violet-700) 0%,var(--violet-500) 55%,var(--blue-500) 100%);color:#fff;padding:var(--sp-20) 0 var(--sp-16)}
+.hero h1{color:#fff;max-width:16em}
+.hero p{opacity:.92;max-width:44em;font-size:18px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-6)}
+.hero .meta span{border:1px solid rgba(255,255,255,.4);border-radius:var(--r-pill);padding:5px 14px;font-size:13px;font-weight:600}
+
+section{padding:var(--sp-16) 0;border-bottom:1px solid var(--gray-200)}
+.sec-num{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--violet-500);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:var(--sp-2)}
+.lead{color:var(--gray-600);max-width:56em}
+
+/* ---------- карточки / сетки ---------- */
+.grid{display:grid;gap:var(--sp-4)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g4{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-md);padding:var(--sp-5);box-shadow:var(--shadow-sm)}
+.card h3{font-size:16px;margin-bottom:var(--sp-2)}
+.note{background:var(--yellow-100);border-left:4px solid var(--yellow-500);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:var(--sp-3) var(--sp-4);font-size:14px;margin:var(--sp-4) 0}
+.note.blue{background:var(--blue-50);border-color:var(--blue-500)}
+.note.violet{background:var(--violet-50);border-color:var(--violet-500)}
+
+/* ---------- палитра ---------- */
+.swatch{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--gray-200);background:#fff}
+.swatch .chip{height:76px}
+.swatch .info{padding:8px 10px;font-size:12px}
+.swatch .info b{display:block;font-size:13px}
+.swatch .info code{background:none;padding:0;font-size:11px;color:var(--gray-600)}
+.role{display:inline-block;font-size:11px;font-weight:700;border-radius:5px;padding:1px 7px;margin-top:4px}
+.role.key{background:var(--violet-100);color:var(--violet-700)}
+.role.acc{background:var(--orange-100);color:var(--orange-700)}
+.role.sec{background:var(--blue-100);color:var(--blue-700)}
+
+/* ---------- типографика ---------- */
+.type-row{display:flex;align-items:baseline;gap:var(--sp-5);border-bottom:1px dashed var(--gray-200);padding:var(--sp-3) 0;flex-wrap:wrap}
+.type-row .spec{font-family:var(--font-mono);font-size:11px;color:var(--gray-500);min-width:210px}
+
+/* ---------- до/после ---------- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)}
+@media(max-width:760px){.compare{grid-template-columns:1fr}}
+.bad{border-color:var(--red-500)!important;position:relative}
+.good{border-color:var(--green-500)!important;position:relative}
+.bad::before,.good::before{position:absolute;top:-10px;left:12px;font-size:11px;font-weight:800;padding:2px 10px;border-radius:var(--r-pill);color:#fff}
+.bad::before{content:"✗ НЕЛЬЗЯ";background:var(--red-500)}
+.good::before{content:"✓ ТАК";background:var(--green-500)}
+
+/* ---------- демо-кнопки ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;border-radius:var(--r-pill);padding:12px 24px;transition:all .15s}
+.btn-primary{background:var(--violet-500);color:#fff}.btn-primary:hover{background:var(--violet-600)}
+.btn-accent{background:var(--orange-300);color:var(--gray-900)}.btn-accent:hover{background:var(--orange-400)}
+.btn-ghost{background:transparent;color:var(--violet-600);box-shadow:inset 0 0 0 1.5px var(--violet-300)}
+.btn-link{background:none;color:var(--blue-500);padding:12px 8px}
+.input{font:inherit;padding:12px 16px;border:1.5px solid var(--gray-300);border-radius:var(--r-pill);background:#fff;width:100%}
+.input:focus{outline:none;border-color:var(--violet-500);box-shadow:0 0 0 3px rgba(124,100,221,.25)}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);padding:6px 14px;font-size:13px;font-weight:600;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-700)}
+.chip.on{background:var(--violet-500);border-color:var(--violet-500);color:#fff}
+.badge{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px}
+.badge.easy{background:var(--green-100);color:#0d6b4a}.badge.mid{background:var(--yellow-100);color:#8f4e00}.badge.hard{background:var(--red-100);color:#ad0000}
+mark{background:var(--orange-100);color:var(--gray-900);border-bottom:2px solid var(--orange-300);border-radius:3px;padding:0 2px}
+
+footer{padding:var(--sp-10) 0;color:var(--gray-500);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-sm)}
+th{text-align:left;background:var(--gray-50);font-weight:700}
+th,td{padding:10px 14px;border-bottom:1px solid var(--gray-200)}
+td code{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<nav class="topbar"><div class="wrap">
+  <span class="logo"><span class="logo-mark">√</span>MathFinder · Брендбук</span>
+  <a class="toc" href="#who">Кто мы</a><a class="toc" href="#logo">Логотип</a>
+  <a class="toc" href="#color">Цвет</a><a class="toc" href="#type">Типографика</a>
+  <a class="toc" href="#ui">UI-примитивы</a><a class="toc" href="#voice">Голос</a>
+  <a class="toc" href="#layout">Сетка</a><a class="toc" href="#motion">Motion</a>
+  <a class="toc" href="#a11y">Доступность</a><a class="toc" href="#code">В коде</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <h1>Брендбук MathFinder</h1>
+  <p>Единый свод правил бренда для всех проектов: веб, мобильное приложение, лендинги, презентации, выгрузки. Написан так, чтобы его можно было буквально вставлять в промпт кодеру или LLM.</p>
+  <div class="meta"><span>v1.0 · 18.11.2026</span><span>Референсы: math-olymp.rudn.ru · do.bmstu.ru</span><span>Токены: design-system/tokens.css</span></div>
+</div></header>
+
+<!-- ============================== 01 ============================== -->
+<section id="who"><div class="wrap">
+  <span class="sec-num">01 — Позиционирование</span>
+  <h2>Кто мы и для кого</h2>
+  <div class="grid g3">
+    <div class="card"><h3>🎯 Продукт</h3><p style="margin:0;font-size:14px;color:var(--gray-600)">Локальный инструмент поиска олимпиадных задач по темам в неструктурированных PDF-сборниках для студентов техвузов. Индексация → извлечение задач → поиск по чипам тем.</p></div>
+    <div class="card"><h3>👤 Аудитория</h3><p style="margin:0;font-size:14px;color:var(--gray-600)">Тренеры и преподаватели математики. Эксперты, работают каждый день, ценят скорость и плотность информации выше декора. Вечером работают в тёмной теме.</p></div>
+    <div class="card"><h3>💡 Обещание бренда</h3><p style="margin:0;font-size:14px;color:var(--gray-600)">«Превращаем гору скучных PDF в мгновенный тематический поиск». Спокойный академичный инструмент, а не игровой сервис.</p></div>
+  </div>
+  <h3 style="margin-top:var(--sp-8)">Личность бренда — 4 черты</h3>
+  <div class="grid g4">
+    <div class="card" style="text-align:center"><div style="font-size:28px">🎓</div><b>Академичный</b><p class="mono" style="font-size:11px;color:var(--gray-500);margin:0">не «школьный ярмарочный»</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:28px">⚡</div><b>Быстрый</b><p class="mono" style="font-size:11px;color:var(--gray-500);margin:0">минимум кликов до задачи</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:28px">🔍</div><b>Точный</b><p class="mono" style="font-size:11px;color:var(--gray-500);margin:0">подсветка, номера страниц, ID</p></div>
+    <div class="card" style="text-align:center"><div style="font-size:28px">🤝</div><b>Спокойный</b><p class="mono" style="font-size:11px;color:var(--gray-500);margin:0">без крика, без капса, без эмодзи-простыней</p></div>
+  </div>
+  <div class="note violet"><b>Формула стиля:</b> академическая база BMSTU (чистый фон, pill-скругления, спокойные статусы) + творческая энергия RUDN (фиолетовый бренд, оранжевые акценты).</div>
+</div></section>
+
+<!-- ============================== 02 ============================== -->
+<section id="logo"><div class="wrap">
+  <span class="sec-num">02 — Логотип и знак</span>
+  <h2>Знак «√» в градиентном квадрате</h2>
+  <div class="grid g2">
+    <div class="card" style="display:flex;align-items:center;gap:var(--sp-6)">
+      <span class="logo-mark" style="width:88px;height:88px;border-radius:26px;font-size:42px">√</span>
+      <div><h3 style="font-size:26px;margin-bottom:4px">MathFinder</h3>
+      <p style="margin:0;font-size:13px;color:var(--gray-500)" class="mono">gradient 135° · #7C64DD → #065BAB<br>radius = 30% от размера<br>знак: Inter ExtraBold, белый</p></div>
+    </div>
+    <div>
+      <h3>Правила</h3>
+      <ul style="font-size:14px;color:var(--gray-700);padding-left:18px;line-height:2">
+        <li>Охранные поле ≥ высоте знака (∅ = 1×mark)</li>
+        <li>Минимальный размер: 24px в вебе, 44px в иконке приложения</li>
+        <li>На белом/сером фоне — как есть; на фото/тёмном — только на плашке <code>--bg-surface</code> или с белой подложкой</li>
+        <li>Градиент фиксированный 135°, направление менять нельзя</li>
+      </ul>
+      <div class="compare" style="margin-top:var(--sp-4)">
+        <div class="card bad" style="text-align:center;padding-top:20px"><span class="logo-mark" style="margin:0 auto;background:var(--gray-900)">√</span><p class="mono" style="font-size:11px;margin:6px 0 0">монохром чёрный ✗</p></div>
+        <div class="card good" style="text-align:center;padding-top:20px"><span class="logo-mark" style="margin:0 auto">√</span><p class="mono" style="font-size:11px;margin:6px 0 0">фирменный градиент ✓</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="note blue"><b>SVG-знак для вставки в код:</b> лежит в <code>brandbook/assets/logo.svg</code> — используйте его, а не перерисовывайте.</div>
+</div></section>
+
+<!-- ============================== 03 ============================== -->
+<section id="color"><div class="wrap">
+  <span class="sec-num">03 — Цвет</span>
+  <h2>Палитра: один бренд, один акцент, дисциплина</h2>
+  <p class="lead">Три роли жёстко закреплены. Фиолетовый — бренд и интерактив. Оранжевый — только главный CTA экрана и подсветку найденного текста. Синий — ссылки и второй уровень. Всё остальное — нейтральные серые.</p>
+
+  <h3>Ключевые цвета</h3>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:var(--violet-500)"></div><div class="info"><b>Violet 500</b><code>#7C64DD · --brand</code><br><span class="role key">BRAND</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--orange-300)"></div><div class="info"><b>Orange 300</b><code>#FFAF60 · --accent</code><br><span class="role acc">ACCENT</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--blue-500)"></div><div class="info"><b>Blue 500</b><code>#065BAB · --link</code><br><span class="role sec">LINKS</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--gray-25);border-bottom:1px solid var(--gray-200)"></div><div class="info"><b>Gray 25</b><code>#FAFAFA · --bg-page</code><br><span class="role" style="background:var(--gray-100);color:var(--gray-600)">PAGE BG</span></div></div>
+  </div>
+
+  <h3 style="margin-top:var(--sp-8)">Все шкалы</h3>
+  <div id="scales"></div>
+
+  <h3 style="margin-top:var(--sp-8)">Семантика статусов (фон / текст)</h3>
+  <div class="grid g3">
+    <div class="card" style="background:var(--green-100);border-color:transparent"><b style="color:#0d6b4a">Успех · проиндексировано</b><p class="mono" style="font-size:12px;margin:4px 0 0;color:#0d6b4a">#CAF4E3 / #17976A</p></div>
+    <div class="card" style="background:var(--yellow-100);border-color:transparent"><b style="color:#8f4e00">Внимание · частично распознано</b><p class="mono" style="font-size:12px;margin:4px 0 0;color:#8f4e00">#FFEFCD / #C98A00</p></div>
+    <div class="card" style="background:var(--red-100);border-color:transparent"><b style="color:#ad0000">Ошибка · PDF не читается</b><p class="mono" style="font-size:12px;margin:4px 0 0;color:#ad0000">#FFCDCD / #D92D20</p></div>
+  </div>
+
+  <h3 style="margin-top:var(--sp-8)">Соотношения на экране — правило 60/30/10</h3>
+  <div style="display:flex;height:34px;border-radius:var(--r-pill);overflow:hidden;border:1px solid var(--gray-200);margin-bottom:8px">
+    <div style="flex:60;background:var(--gray-25)"></div><div style="flex:30;background:var(--violet-100)"></div><div style="flex:8;background:var(--violet-500)"></div><div style="flex:2;background:var(--orange-300)"></div>
+  </div>
+  <p class="mono" style="font-size:12px;color:var(--gray-500)">60% нейтральные фоны · 30% brand-soft (violet 50–100) · 10% brand + accent. Оранжевого всегда меньше всего.</p>
+
+  <div class="compare">
+    <div class="card bad"><h3 style="font-size:14px">Радуга фильтров</h3><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge" style="background:#e91e63;color:#fff">Геометрия</span><span class="badge" style="background:#4caf50;color:#fff">Теория чисел</span><span class="badge" style="background:#2196f3;color:#fff">Алгебра</span><span class="badge" style="background:#ff9800;color:#fff">Комбинаторика</span></div></div>
+    <div class="card good"><h3 style="font-size:14px">Чипы через brand-soft</h3><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip on">Геометрия</span><span class="chip">Теория чисел</span><span class="chip">Алгебра</span><span class="chip">Комбинаторика</span></div></div>
+  </div>
+</div></section>
+
+<!-- ============================== 04 ============================== -->
+<section id="type"><div class="wrap">
+  <span class="sec-num">04 — Типографика</span>
+  <h2>Inter + JetBrains Mono</h2>
+  <p class="lead">Референсы используют платные TildaSans и Gilroy. Бесплатный аналог с отличной кириллицей — <b>Inter</b>. Моноширинный <b>JetBrains Mono</b> обязателен для технических идентификаторов: их копируют в конспекты.</p>
+  <div class="card" style="margin:var(--sp-6) 0">
+    <div class="type-row"><span class="spec">H1 · 36–56 · 800 · −2%</span><span style="font-size:36px;font-weight:800;letter-spacing:-.02em">Задачи ждут вас</span></div>
+    <div class="type-row"><span class="spec">H2 · 30 · 800 · −2%</span><span style="font-size:30px;font-weight:800;letter-spacing:-.02em">Индексация сборников</span></div>
+    <div class="type-row"><span class="spec">H3 · 24 · 700</span><span style="font-size:24px;font-weight:700">Шарыгин, гл. 4 — Неравенства</span></div>
+    <div class="type-row"><span class="spec">Body · 16 · 400 · 1.55</span><span style="font-size:16px">Найдите <mark>x²+y²+z²</mark>, если при любых действительных…</span></div>
+    <div class="type-row"><span class="spec">Small · 14 · 400 · Gray 600</span><span style="font-size:14px;color:var(--gray-600)">Загружено 2 дня назад · 214 страниц</span></div>
+    <div class="type-row"><span class="spec">Caption/Badge · 12 · 600</span><span class="badge mid">Средняя</span> <span style="font-size:12px;color:var(--gray-500)" class="mono">стр. 137 · №4.2.18</span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Правила наборки</h3><ul style="font-size:14px;color:var(--gray-700);padding-left:18px;margin:0;line-height:2"><li>Максимум 3 веса на экран: 400 / 600 / 800</li><li>Заголовки — letter-spacing −0.02em, жирность 700–800</li><li>Не использовать ALL CAPS в заголовках (только eyebrow-метки 12px)</li><li>Длина строки body ≤ 70 символов</li></ul></div>
+    <div class="card"><h3>Куда идёт mono</h3><ul style="font-size:14px;color:var(--gray-700);padding-left:18px;margin:0;line-height:2"><li><span class="mono">№4.2.18</span> — номера задач</li><li><span class="mono">стр. 137–142</span> — диапазоны страниц</li><li>ID документов, хеши, счётчики формата <span class="mono">214/214</span></li><li>Никогда — в беглом тексте и заголовках</li></ul></div>
+  </div>
+</div></section>
+
+<!-- ============================== 05 ============================== -->
+<section id="ui"><div class="wrap">
+  <span class="sec-num">05 — UI-примитивы</span>
+  <h2>Как выглядят элементы бренда</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Кнопки</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-accent">Загрузить PDF</button>
+        <button class="btn btn-primary">Найти задачи</button>
+        <button class="btn btn-ghost">Сбросить</button>
+        <button class="btn btn-link">Все сборники →</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin:12px 0 0">Pill-форма (BMSTU). Один оранжевый CTA на экран. Высота ≥44px (touch).</p>
+    </div>
+    <div class="card"><h3>Поиск и чипы тем</h3>
+      <input class="input" placeholder="Неравенство Коши-Буняковского…" style="margin-bottom:10px">
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip on">Неравенства</span><span class="chip">Теория чисел</span><span class="chip">+SLOVO</span></div>
+    </div>
+    <div class="card"><h3>Карточка задачи</h3>
+      <div style="border:1px solid var(--gray-200);border-radius:var(--r-md);padding:14px;background:var(--gray-25)">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><span class="badge hard">Сложная</span><span class="mono" style="font-size:12px;color:var(--gray-500)">стр. 137 · №4.2.18</span></div>
+        <p style="font-size:14px;margin:0">Докажите <mark>неравенство Коши–Буняковского</mark> для n векторов…</p>
+        <div style="margin-top:8px"><span class="chip" style="padding:3px 10px;font-size:12px">Неравенства</span></div>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin:10px 0 0"><mark>Подсветка</mark> совпадений — фирменный жест продукта: orange-100 + underline orange-300.</p>
+    </div>
+    <div class="card"><h3>Радиусы и тени</h3>
+      <div style="display:flex;gap:12px;align-items:end">
+        <div style="width:56px;height:56px;background:var(--violet-100);border-radius:6px"></div>
+        <div style="width:56px;height:56px;background:var(--violet-100);border-radius:10px"></div>
+        <div style="width:56px;height:56px;background:var(--violet-100);border-radius:16px"></div>
+        <div style="width:56px;height:56px;background:var(--violet-100);border-radius:999px"></div>
+      </div>
+      <p class="mono" style="font-size:12px;color:var(--gray-500);margin:10px 0 0">sm 6 (поля·теги) · md 10 (карточки) · lg 16 (панели) · pill (кнопки·фильтры). Тени мягкие, xs→lg, никогда black 50%.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================== 06 ============================== -->
+<section id="voice"><div class="wrap">
+  <span class="sec-num">06 — Голос и тексты</span>
+  <h2>Пишем как коллега-тренер, а не как маркетинг</h2>
+  <table>
+    <tr><th style="width:30%">Контекст</th><th>✓ Так</th><th>✗ Не так</th></tr>
+    <tr><td>Пустой результат</td><td><span class="mono" style="font-size:13px">По запросу «графы» задач не найдено. Попробуйте «теория графов» или загрузите новый сборник.</span></td><td style="color:var(--gray-500)">Упс! 😢 Ничего не нашлось…</td></tr>
+    <tr><td>Идёт индексация</td><td><span class="mono" style="font-size:13px">Обрабатываем «Шарыгин.pdf» — страница 137 из 214.</span></td><td style="color:var(--gray-500)">Магия происходит! ✨✨✨</td></tr>
+    <tr><td>Ошибка PDF</td><td><span class="mono" style="font-size:13px">Файл защищён паролем. Снимите защиту и загрузите снова.</span></td><td style="color:var(--gray-500)">Что-то пошло не так 🤷</td></tr>
+    <tr><td>CTA</td><td><span class="mono" style="font-size:13px">Загрузить PDF · Найти задачи · Открыть страницу 137</span></td><td style="color:var(--gray-500)">Хочу искать!!! / Жми сюда</td></tr>
+  </table>
+  <div class="note"><b>Регистр:</b> «вы» с маленькой буквы в интерфейсе, без канцелярита («осуществляется загрузка» ✗). Числа и страницы — всегда конкретикой.</div>
+</div></section>
+
+<!-- ============================== 07 ============================== -->
+<section id="layout"><div class="wrap">
+  <span class="sec-num">07 — Сетка и отступы</span>
+  <h2>Шаг 4px, контейнер 1200</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Spacing scale</h3>
+      <div style="display:flex;align-items:end;gap:6px;height:100px;margin-bottom:8px" id="spacing-demo"></div>
+      <p class="mono" style="font-size:12px;color:var(--gray-500);margin:0">4·8·12·16·20·24·32·40·48·64·80·96 — никаких «13px по вкусу»</p>
+    </div>
+    <div class="card"><h3>Брейкпоинты и touch</h3>
+      <p class="mono" style="font-size:13px;color:var(--gray-600);margin-bottom:12px">sm 480 · md 768 · lg 1024 · xl 1280<br>container 1200 · header 64 · gutter 20</p>
+      <ul style="font-size:14px;color:var(--gray-700);padding-left:18px;margin:0;line-height:2"><li>Mobile-first: всё, что сделано для веба, наследуется мобилкой</li><li>Touch-target ≥ 44×44px обязателен</li><li>Плотность списка задач выше, чем у маркетинговых сайтов — это рабочий инструмент</li></ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================== 08 ============================== -->
+<section id="motion"><div class="wrap">
+  <span class="sec-num">08 — Motion</span>
+  <h2>Быстро и предсказуемо</h2>
+  <div class="grid g3">
+    <div class="card"><h3>120ms fast</h3><p style="font-size:14px;color:var(--gray-600);margin:0">hover, фокус, нажатие чипа</p></div>
+    <div class="card"><h3>200ms base</h3><p style="font-size:14px;color:var(--gray-600);margin:0">появление карточек, модалки, дропдауны</p></div>
+    <div class="card"><h3>320ms slow</h3><p style="font-size:14px;color:var(--gray-600);margin:0">раскрытие панели фильтров, skeleton→данные</p></div>
+  </div>
+  <p style="margin-top:var(--sp-4)"><code>cubic-bezier(.2,.7,.3,1)</code> — единственная кривая. Никаких пружинных overscroll-анимаций: инструмент для ежедневной работы.</p>
+</div></section>
+
+<!-- ============================== 09 ============================== -->
+<section id="a11y"><div class="wrap">
+  <span class="sec-num">09 — Доступность</span>
+  <h2>Минимум контраста</h2>
+  <table>
+    <tr><th>Пара</th><th>Контраст</th><th>Вердикт</th></tr>
+    <tr><td><span class="mono">Gray 900 on White</span></td><td>17.4:1</td><td>✅ body-текст</td></tr>
+    <tr><td><span class="mono">White on Violet 500</span></td><td>4.6:1</td><td>✅ кнопки, крупный текст</td></tr>
+    <tr><td><span class="mono">Gray 900 on Orange 300</span></td><td>8.9:1</td><td>✅ текст на оранжевом — тёмный, не белый!</td></tr>
+    <tr><td><span class="mono">White on Orange 300</span></td><td>2.0:1</td><td>❌ запрещено</td></tr>
+    <tr><td><span class="mono">Gray 500 on White</span></td><td>4.7:1</td><td>✅ secondary ≥14px bold</td></tr>
+  </table>
+  <ul style="font-size:14px;color:var(--gray-700);padding-left:18px;line-height:2">
+    <li>Фокус-кольцо всегда видно: <code>0 0 0 3px violet 30%</code> — не убирать <code>outline:none</code> без замены</li>
+    <li>Смысл не цветом: сложность задачи дублируется словом (бейдж), а не только красным/зелёным</li>
+    <li>Тёмная тема — алиасы (<code>--bg-page</code>, <code>--text-primary</code>), цвета-константы в компонентах запрещены</li>
+  </ul>
+</div></section>
+
+<!-- ============================== 10 ============================== -->
+<section id="code"><div class="wrap">
+  <span class="sec-num">10 — В коде</span>
+  <h2>Как применять брендбук при разработке</h2>
+  <div class="grid g2">
+    <div class="card"><h3>Источники истины</h3>
+      <table style="box-shadow:none;font-size:13px">
+        <tr><td><code>design-system/tokens.css</code></td><td>CSS-переменные, web</td></tr>
+        <tr><td><code>design-system/tokens.json</code></td><td>W3C tokens → Figma / iOS / Android</td></tr>
+        <tr><td><code>brandbook/ai-context.md</code></td><td>сжатая версия для промптов LLM</td></tr>
+        <tr><td><code>brandbook/tailwind.preset.js</code></td><td>preset для Tailwind v3/v4</td></tr>
+      </table>
+    </div>
+    <div class="card"><h3>Железные правила</h3>
+      <ol style="font-size:14px;color:var(--gray-700);padding-left:18px;margin:0;line-height:2">
+        <li>В компонентах — только семантические алиасы (<code>var(--brand)</code>), не сырые HEX</li>
+        <li>Новый цвет? Сначала добавить токен, потом использовать</li>
+        <li>Оранжевый = максимум одна кнопка на экран</li>
+        <li>Размеры кратны 4px; радиусы только из шкалы</li>
+        <li>Изменения токенов — через PR с апдейтом этого брендбука</li>
+      </ol>
+    </div>
+  </div>
+  <div class="note violet"><b>Для LLM-кодера:</b> подключите файл <code>brandbook/ai-context.md</code> в контекст проекта (или вставьте в системный промпт) — он содержит все правила на ~1 странице.</div>
+</div></section>
+
+<footer><div class="wrap">MathFinder Brandbook v1.0 · основан на дизайн-системе v0.1 · референсы: math-olymp.rudn.ru, do.bmstu.ru · токены — единый источник истины в <code>design-system/</code></div></footer>
+
+<script>
+// палитры рендерим из одного объекта, чтобы HTML не расходился с токенами
+const SCALES={
+ "Violet (brand)":[["50","#f4f1fe"],["100","#e9e3fd"],["200","#d4c9fa"],["300","#b7a4f4"],["400","#9a83ec"],["500","#7c64dd"],["600","#6a4fd0"],["700","#573fb0"],["800","#46338c"],["900","#382a6e"]],
+ "Orange (accent)":[["50","#fff6ec"],["100","#ffe9d1"],["200","#ffd2a3"],["300","#ffaf60"],["400","#fb9430"],["500","#e07d01"],["600","#b96500"],["700","#8f4e00"]],
+ "Blue (links)":[["50","#eaf3fb"],["100","#d3e5f6"],["200","#a8caec"],["300","#6ea9df"],["400","#3587cf"],["500","#065bab"],["600","#004e9f"],["700","#003d7d"],["800","#002d5c"],["900","#001f40"]],
+ "Gray (neutral)":[["0","#ffffff"],["25","#fafafa"],["50","#f5f5f7"],["100","#eeeef1"],["200","#e2e2e8"],["300","#c9c9c9"],["400","#a3a3ad"],["500","#7a7a85"],["600","#55555f"],["700","#3a3a42"],["800","#232329"],["900","#141418"]]
+};
+const KEY={"500":"key","300":"acc"},ROLES={Violet:{500:"BRAND"},Orange:{300:"ACCENT"},Blue:{500:"LINKS"}};
+document.getElementById("scales").innerHTML=Object.entries(SCALES).map(([name,arr])=>`
+ <h4 style="margin:20px 0 8px;font-size:14px">${name}</h4>
+ <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(86px,1fr))">
+ ${arr.map(([k,hex])=>`<div class="swatch"><div class="chip" style="height:44px;background:${hex};${k==='0'||k==='25'||k==='50'?'border-bottom:1px solid var(--gray-200)':''}"></div>
+ <div class="info"><b>${k}</b><code>${hex.toUpperCase()}</code></div></div>`).join("")}</div>`).join("");
+
+const SP=[4,8,12,16,20,24,32,40,48,64];
+document.getElementById("spacing-demo").innerHTML=SP.map(v=>`<div title="${v}px" style="width:34px;height:${v+12}px;background:var(--violet-300);border-radius:4px"></div>`).join("");
+</script>
+</body>
+</html>

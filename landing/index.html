@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathFinder — поиск олимпиадных задач по темам в ваших PDF-сборниках</title>
+<meta name="description" content="Локальный инструмент для тренеров и преподавателей: загрузите PDF-сборник, система проиндексирует страницы и извлечёт задачи с темами. Всё работает на вашем компьютере.">
+<link rel="icon" type="image/svg+xml" href="../brandbook/assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MathFinder Landing v1.0 — собрано строго по брендбуку
+   Токены продублированы из design-system/tokens.css (v0.1)
+   ============================================================ */
+:root{
+  --violet-50:#f4f1fe; --violet-100:#e9e3fd; --violet-200:#d4c9fa; --violet-300:#b7a4f4;
+  --violet-400:#9a83ec; --violet-500:#7c64dd; --violet-600:#6a4fd0; --violet-700:#573fb0;
+  --violet-800:#46338c; --violet-900:#382a6e;
+  --orange-50:#fff6ec; --orange-100:#ffe9d1; --orange-200:#ffd2a3; --orange-300:#ffaf60;
+  --orange-400:#fb9430; --orange-500:#e07d01; --orange-600:#b96500; --orange-700:#8f4e00;
+  --blue-50:#eaf3fb; --blue-100:#d3e5f6; --blue-200:#a8caec; --blue-300:#6ea9df;
+  --blue-400:#3587cf; --blue-500:#065bab; --blue-600:#004e9f; --blue-700:#003d7d;
+  --gray-0:#fff; --gray-25:#fafafa; --gray-50:#f5f5f7; --gray-100:#eeeef1; --gray-200:#e2e2e8;
+  --gray-300:#c9c9c9; --gray-400:#a3a3ad; --gray-500:#7a7a85; --gray-600:#55555f;
+  --gray-700:#3a3a42; --gray-800:#232329; --gray-900:#141418;
+  --green-100:#caf4e3; --green-500:#17976a; --green-700:#0d6b4a;
+  --yellow-100:#ffefcd; --yellow-500:#c98a00;
+
+  --bg-page:var(--gray-25); --bg-surface:var(--gray-0); --bg-surface-2:var(--gray-50);
+  --bg-inverse:var(--gray-900);
+  --text-primary:var(--gray-900); --text-secondary:var(--gray-600); --text-tertiary:var(--gray-500);
+  --text-on-brand:#fff;
+  --border-default:var(--gray-200); --border-strong:var(--gray-300);
+  --brand:var(--violet-500); --brand-hover:var(--violet-600); --brand-soft:var(--violet-50);
+  --accent:var(--orange-300); --link:var(--blue-500);
+
+  --font-sans:"Inter","TildaSans","Gilroy",-apple-system,"Segoe UI",Arial,sans-serif;
+  --font-mono:"JetBrains Mono","SF Mono",Consolas,monospace;
+
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:999px; --r-full:50%;
+  --shadow-xs:0 1px 2px rgba(20,20,24,.06);
+  --shadow-sm:0 1px 3px rgba(20,20,24,.08),0 1px 2px rgba(20,20,24,.05);
+  --shadow-md:0 4px 12px rgba(20,20,24,.09);
+  --shadow-lg:0 12px 32px rgba(20,20,24,.13);
+  --shadow-focus:0 0 0 3px color-mix(in srgb,var(--brand) 30%,transparent);
+}
+[data-theme="dark"]{
+  --bg-page:var(--gray-900); --bg-surface:#1c1c22; --bg-surface-2:#232329;
+  --text-primary:#f2f2f5; --text-secondary:#b5b5bf; --text-tertiary:#8b8b96;
+  --border-default:#2e2e36; --border-strong:#3d3d47;
+  --brand:var(--violet-400); --brand-hover:var(--violet-300);
+  --brand-soft:color-mix(in srgb,var(--violet-400) 14%,transparent);
+  --link:var(--blue-300);
+  --shadow-md:0 4px 12px rgba(0,0,0,.4); --shadow-lg:0 12px 32px rgba(0,0,0,.5);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-sans);background:var(--bg-page);color:var(--text-primary);
+  line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased;
+  transition:background .25s,color .25s;
+}
+img,svg{display:block;max-width:100%}
+a{color:var(--link);text-decoration:none}
+.container{max-width:1140px;margin:0 auto;padding:0 24px}
+section{padding:88px 0}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.2;font-weight:800}
+h2{font-size:clamp(1.7rem,3.4vw,2.3rem);margin-bottom:12px}
+.section-sub{color:var(--text-secondary);font-size:1.05rem;max-width:640px;margin-bottom:48px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--brand);
+  background:var(--brand-soft);padding:6px 14px;border-radius:var(--r-pill);margin-bottom:20px;
+}
+
+/* ---------- Кнопки (по гайдлайну: pill, один акцентный CTA) ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:0 28px;border-radius:var(--r-pill);border:2px solid transparent;
+  font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:all .18s ease;
+  text-decoration:none;white-space:nowrap;
+}
+.btn:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+.btn-accent{background:var(--accent);color:#3a2200}
+.btn-accent:hover{background:var(--orange-400);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-primary{background:var(--brand);color:var(--text-on-brand)}
+.btn-primary:hover{background:var(--brand-hover);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-ghost{background:transparent;color:var(--text-primary);border-color:var(--border-strong)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+.btn-sm{min-height:40px;padding:0 20px;font-size:.9rem}
+
+/* ---------- Шапка ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg-surface) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--border-default);
+}
+.nav{display:flex;align-items:center;gap:32px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.2rem;letter-spacing:-.02em;color:var(--text-primary)}
+.logo-mark{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--violet-500),var(--violet-700));
+  color:#fff;font-weight:800;font-size:1.15rem;font-family:var(--font-mono);
+}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:auto}
+.nav-links a{color:var(--text-secondary);font-weight:500;font-size:.95rem;transition:color .15s}
+.nav-links a:hover{color:var(--brand)}
+.theme-toggle{
+  width:44px;height:44px;border-radius:var(--r-full);border:1px solid var(--border-default);
+  background:var(--bg-surface);cursor:pointer;font-size:1.1rem;display:grid;place-items:center;
+  transition:all .15s;
+}
+.theme-toggle:hover{border-color:var(--brand)}
+
+/* ---------- Hero ---------- */
+.hero{padding:96px 0 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);margin-bottom:20px}
+.hero h1 .hl{color:var(--brand)}
+.hero p.lead{font-size:1.15rem;color:var(--text-secondary);margin-bottom:32px;max-width:520px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+.hero-note{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--text-tertiary)}
+.hero-stats{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap}
+.stat b{display:block;font-size:1.7rem;font-weight:800;letter-spacing:-.02em;color:var(--text-primary)}
+.stat span{font-size:.85rem;color:var(--text-tertiary)}
+
+/* Демо-карточка результата поиска */
+.demo-panel{
+  background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lg);padding:20px;position:relative;
+}
+.demo-search{
+  display:flex;align-items:center;gap:10px;border:1.5px solid var(--border-strong);
+  border-radius:var(--r-pill);padding:12px 18px;margin-bottom:16px;background:var(--bg-surface-2);
+}
+.demo-search .q{font-weight:600;font-size:.95rem}
+.demo-search .cursor{width:2px;height:18px;background:var(--brand);animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r-pill);
+  font-size:.82rem;font-weight:600;border:1.5px solid var(--border-default);background:var(--bg-surface);
+  color:var(--text-secondary);cursor:pointer;transition:all .15s;user-select:none;
+}
+.chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
+.demo-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.problem-card{
+  border:1px solid var(--border-default);border-radius:var(--r-md);padding:16px;
+  background:var(--bg-surface);box-shadow:var(--shadow-xs);transition:all .2s;
+}
+.problem-card + .problem-card{margin-top:12px}
+.problem-card:hover{border-color:var(--brand);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.pc-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.pc-id{font-family:var(--font-mono);font-size:.78rem;color:var(--text-tertiary)}
+.badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:var(--r-pill)}
+.badge-hard{background:var(--red-100,#ffcdcd);color:#8a1c12}
+.badge-mid{background:var(--yellow-100);color:var(--orange-700)}
+.badge-easy{background:var(--green-100);color:var(--green-700)}
+.badge-topic{background:var(--brand-soft);color:var(--violet-700)}
+[data-theme="dark"] .badge-topic{color:var(--violet-200)}
+[data-theme="dark"] .badge-hard{background:#4a1d1a;color:#ffb4ab}
+[data-theme="dark"] .badge-mid{background:#4a3a12;color:#ffd591}
+[data-theme="dark"] .badge-easy{background:#123f2e;color:#8ee6c0}
+.pc-text{font-size:.92rem;color:var(--text-secondary);line-height:1.5}
+mark{background:var(--accent);color:#3a2200;padding:0 4px;border-radius:4px;font-weight:600}
+.pc-foot{display:flex;align-items:center;gap:6px;margin-top:10px;font-family:var(--font-mono);font-size:.78rem;color:var(--link)}
+.demo-label{
+  position:absolute;top:-13px;left:20px;background:var(--gray-900);color:#fff;
+  font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:var(--r-pill);letter-spacing:.04em;
+}
+
+/* ---------- Логотипы-источники ---------- */
+.sources{padding:36px 0;border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default);background:var(--bg-surface)}
+.sources .container{display:flex;align-items:center;gap:36px;flex-wrap:wrap;justify-content:center}
+.sources span{font-size:.85rem;color:var(--text-tertiary);font-weight:600}
+.source-tag{font-weight:700;color:var(--text-tertiary);font-size:.95rem;letter-spacing:-.01em}
+
+/* ---------- Боли ---------- */
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pain-card{
+  background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--r-md);
+  padding:28px;box-shadow:var(--shadow-xs);
+}
+.pain-card .emoji{font-size:1.8rem;margin-bottom:14px}
+.pain-card h3{font-size:1.08rem;margin-bottom:8px}
+.pain-card p{font-size:.92rem;color:var(--text-secondary)}
+
+/* ---------- Как работает ---------- */
+.how{background:var(--bg-surface)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:step}
+.step{position:relative;padding-top:16px}
+.step-num{
+  width:44px;height:44px;border-radius:var(--r-full);display:grid;place-items:center;
+  background:var(--brand-soft);color:var(--brand);font-weight:800;font-size:1.1rem;margin-bottom:16px;
+}
+.step h3{font-size:1.05rem;margin-bottom:8px}
+.step p{font-size:.9rem;color:var(--text-secondary)}
+.step::after{
+  content:"";position:absolute;top:38px;left:60px;right:16px;height:2px;
+  background:repeating-linear-gradient(90deg,var(--border-strong) 0 6px,transparent 6px 12px);
+}
+.step:last-child::after{display:none}
+
+/* ---------- Возможности ---------- */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{
+  background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--r-md);
+  padding:28px;box-shadow:var(--shadow-xs);transition:all .2s;
+}
+.feat-card:hover{border-color:var(--brand);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.feat-icon{
+  width:48px;height:48px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
+  background:linear-gradient(135deg,var(--violet-500),var(--violet-700));color:#fff;font-size:1.3rem;
+}
+.feat-card.accent .feat-icon{background:linear-gradient(135deg,var(--orange-300),var(--orange-500))}
+.feat-card.blue .feat-icon{background:linear-gradient(135deg,var(--blue-400),var(--blue-600))}
+.feat-card h3{font-size:1.08rem;margin-bottom:8px}
+.feat-card p{font-size:.92rem;color:var(--text-secondary)}
+
+/* ---------- Для команды ---------- */
+.team{background:var(--bg-surface)}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:16px}
+.check-list li{display:flex;gap:12px;font-size:.98rem;color:var(--text-secondary)}
+.check-list b{color:var(--text-primary)}
+.check-ico{
+  flex:none;width:24px;height:24px;border-radius:var(--r-full);background:var(--green-100);
+  color:var(--green-700);display:grid;place-items:center;font-size:.8rem;font-weight:800;margin-top:1px;
+}
+.collection-table{width:100%;border-collapse:collapse;background:var(--bg-page);border:1px solid var(--border-default);border-radius:var(--r-md);overflow:hidden;font-size:.9rem}
+.collection-table th{text-align:left;padding:14px 18px;background:var(--bg-surface-2);color:var(--text-tertiary);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.collection-table td{padding:14px 18px;border-top:1px solid var(--border-default)}
+.collection-table .mono{font-family:var(--font-mono);font-size:.82rem;color:var(--text-secondary)}
+.status-dot{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:.85rem}
+.status-dot::before{content:"";width:8px;height:8px;border-radius:var(--r-full)}
+.status-ok::before{background:var(--green-500)}
+.status-ing::before{background:var(--orange-400);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- Цитата ---------- */
+.quote-band{background:linear-gradient(135deg,var(--violet-700),var(--violet-900));color:#fff;border-radius:var(--r-lg);padding:56px;margin-top:20px}
+.quote-band blockquote{font-size:clamp(1.15rem,2.4vw,1.5rem);font-weight:600;line-height:1.45;letter-spacing:-.01em;max-width:820px}
+.quote-band cite{display:block;margin-top:20px;font-style:normal;font-size:.9rem;opacity:.75}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:760px;margin:0 auto}
+details{
+  background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--r-md);
+  padding:0 24px;margin-bottom:12px;transition:border-color .15s;
+}
+details[open]{border-color:var(--brand)}
+summary{
+  cursor:pointer;font-weight:700;font-size:1rem;padding:20px 0;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.4rem;color:var(--brand);font-weight:400;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding-bottom:20px;color:var(--text-secondary);font-size:.94rem}
+
+/* ---------- Финальный CTA ---------- */
+.cta-final{text-align:center}
+.cta-final .inner{
+  background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--r-lg);
+  padding:72px 32px;box-shadow:var(--shadow-md);
+}
+.cta-final h2{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:14px}
+.cta-final p{color:var(--text-secondary);margin-bottom:32px;font-size:1.05rem}
+
+/* ---------- Подвал ---------- */
+.site-footer{border-top:1px solid var(--border-default);padding:48px 0 36px;background:var(--bg-surface)}
+.footer-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+.footer-grid p{font-size:.85rem;color:var(--text-tertiary);max-width:340px;margin-top:12px}
+.footer-links{display:flex;gap:48px;flex-wrap:wrap}
+.footer-col h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.07em;color:var(--text-tertiary);margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{font-size:.9rem;color:var(--text-secondary)}
+.footer-col a:hover{color:var(--brand)}
+.footer-bottom{margin-top:40px;padding-top:24px;border-top:1px solid var(--border-default);font-size:.8rem;color:var(--text-tertiary);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---------- Reveal-анимация ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ---------- Адаптив ---------- */
+@media (max-width:960px){
+  .hero-grid,.team-grid{grid-template-columns:1fr}
+  .pain-grid,.feat-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .step::after{display:none}
+  .nav-links{display:none}
+  section{padding:64px 0}
+}
+@media (max-width:600px){
+  .pain-grid,.feat-grid,.steps{grid-template-columns:1fr}
+  .quote-band{padding:36px 24px}
+  .hero{padding:56px 0 40px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= ШАПКА ================= -->
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="#top"><span class="logo-mark">√</span>MathFinder</a>
+    <ul class="nav-links">
+      <li><a href="#how">Как работает</a></li>
+      <li><a href="#features">Возможности</a></li>
+      <li><a href="#team">Для команды</a></li>
+      <li><a href="#faq">Вопросы</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeBtn" aria-label="Переключить тему">🌙</button>
+    <a class="btn btn-primary btn-sm" href="#cta">Скачать</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">⚡ Работает локально · без облака</span>
+      <h1>Находите нужные задачи в&nbsp;<span class="hl">PDF-сборниках</span> за секунды</h1>
+      <p class="lead">Загрузите сборник олимпиад для техвузов — MathFinder проиндексирует страницы, извлечёт задачи и сам определит темы. Готовьте варьяки и домашки к занятиям в десять раз быстрее.</p>
+      <div class="hero-cta">
+        <a class="btn btn-accent" href="#cta">Скачать и попробовать</a>
+        <a class="btn btn-ghost" href="#how">Как это работает</a>
+      </div>
+      <div class="hero-note">🔒 Файлы не покидают ваш компьютер — индексация идёт локально</div>
+      <div class="hero-stats">
+        <div class="stat"><b>~40 сек</b><span>индексация сборника на 300 страниц</span></div>
+        <div class="stat"><b>12 тем</b><span>базовый классификатор олимпиадной математики</span></div>
+        <div class="stat"><b>0 строк</b><span>ручной разметки задач</span></div>
+      </div>
+    </div>
+
+    <!-- Живое демо результата поиска -->
+    <div class="demo-panel reveal">
+      <span class="demo-label">РЕЗУЛЬТАТ ПОИСКА</span>
+      <div class="demo-search">
+        <span>🔍</span><span class="q">неравенство с условием abc = 1</span><span class="cursor"></span>
+      </div>
+      <div class="demo-chips" id="chipRow">
+        <span class="chip active">Все темы</span>
+        <span class="chip">Неравенства</span>
+        <span class="chip">Алгебра</span>
+        <span class="chip">Комбинаторика</span>
+      </div>
+      <article class="problem-card">
+        <div class="pc-head">
+          <span class="pc-id">Shen-2015 / №4.2.18</span>
+          <span class="badge badge-topic">Неравенства</span>
+          <span class="badge badge-hard">Сложно</span>
+        </div>
+        <p class="pc-text">Докажите, что для положительных <i>a, b, c</i> при <mark>abc = 1</mark> выполняется <mark>неравенство</mark> a²b + b²c + c²a ≥ ab + bc + ca…</p>
+        <div class="pc-foot">📄 с. 118 — «Шен А. Геометрические неравенства» <span style="color:var(--brand)">открыть в PDF →</span></div>
+      </article>
+      <article class="problem-card">
+        <div class="pc-head">
+          <span class="pc-id">MFCC / §3.1-07</span>
+          <span class="badge badge-topic">Алгебра</span>
+          <span class="badge badge-mid">Средне</span>
+        </div>
+        <p class="pc-text">Пусть положительные числа удовлетворяют условию <mark>abc = 1</mark>. Найдите минимум выражения (a+b)(b+c)(c+a)…</p>
+        <div class="pc-foot">📄 с. 47 — «МФТИ, сборник задач по алгебре» <span style="color:var(--brand)">открыть в PDF →</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ИСТОЧНИКИ ================= -->
+<div class="sources">
+  <div class="container">
+    <span>Индексирует любые сканы и текстовые PDF:</span>
+    <span class="source-tag">Шен</span><span class="source-tag">Прасолов</span><span class="source-tag">МФТИ</span>
+    <span class="source-tag">РУДН</span><span class="source-tag">BMSTU</span><span class="source-tag">Турниры городов</span>
+    <span class="source-tag">ваши конспекты</span>
+  </div>
+</div>
+
+<!-- ================= БОЛИ ================= -->
+<section>
+  <div class="container">
+    <span class="eyebrow">Знакомо?</span>
+    <h2>Задачи есть. Но где именно — непонятно</h2>
+    <p class="section-sub">Сборники неструктурированы: условия идут сплошным текстом, ответы в конце книги, оглавление не помогает.</p>
+    <div class="pain-grid">
+      <div class="pain-card reveal"><div class="emoji">🗂️</div><h3>Гигабайты PDF без структуры</h3><p>Десятки сборников, в каждом сотни задач, а нормального тега «тема» нет ни в одном издательстве.</p></div>
+      <div class="pain-card reveal"><div class="emoji">⏳</div><h3>Час на подготовку варьяка</h3><p>Листать страницы в поисках «чего-нибудь про неравенства с условиями» — самый дорогой способ подготовки к занятию.</p></div>
+      <div class="pain-card reveal"><div class="emoji">🧠</div><h3>Опыт живёт в голове тренера</h3><p>«Я помню, была классная задача про инвариант…» — но найти её глазами в трёхтомнике невозможно.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КАК РАБОТАЕТ ================= -->
+<section class="how" id="how">
+  <div class="container">
+    <span class="eyebrow">Процесс</span>
+    <h2>От PDF до готового списка задач — четыре шага</h2>
+    <p class="section-sub">Никакой ручной разметки. Система сама находит границы задач и определяет темы.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="step-num">1</div><h3>Загрузите PDF</h3><p>Перетащите файлы или папку со сборниками. Поддерживаются сканы и текстовые PDF, кириллица включительно.</p></div>
+      <div class="step reveal"><div class="step-num">2</div><h3>Индексация</h3><p>Локальный движок распознаёт страницы, вырезает блоки задач и сохраняет их с точной ссылкой на страницу источника.</p></div>
+      <div class="step reveal"><div class="step-num">3</div><h3>Темы определяются сами</h3><p>Классификатор размечает каждую задачу: неравенства, теория чисел, графы, комбинаторика… Сложность — тоже автоматически.</p></div>
+      <div class="step reveal"><div class="step-num">4</div><h3>Ищите и собирайте</h3><p>Поиск по смыслу, фильтры по темам и сборникам, подборки «в варьяк» с экспортом в список для занятия.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ВОЗМОЖНОСТИ ================= -->
+<section id="features">
+  <div class="container">
+    <span class="eyebrow">Что внутри</span>
+    <h2>Сделано для тренеров, а не для архивов</h2>
+    <p class="section-sub">Каждая находка ведёт ровно на ту страницу исходного PDF — с проверенным цитированием.</p>
+    <div class="feat-grid">
+      <div class="feat-card reveal"><div class="feat-icon">🎯</div><h3>Поиск по формулировкам</h3><p>«Неравенство при abc = 1», «задача про 25 туристов и рыцарей» — ищется по смыслу, а не только по точному совпадению слов.</p></div>
+      <div class="feat-card accent reveal"><div class="feat-icon">🏷️</div><h3>Автометки тем и сложности</h3><p>12 тем олимпиадной математики плюс уровень «разминка / основная / финал». Метки можно поправить вручную.</p></div>
+      <div class="feat-card blue reveal"><div class="feat-icon">📄</div><h3>Ссылка на страницу</h3><p>Результат открывается прямо на нужной странице PDF — удобно показывать на проекторе во время занятия.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">📦</div><h3>Папки-подборки</h3><p>Собирайте задачи в «Варьяк 12 октября» или «Домашка: графы» и выгружайте списком с источниками.</p></div>
+      <div class="feat-card accent reveal"><div class="feat-icon">🔒</div><h3>Полностью локально</h3><p>Ни один файл не уходит в интернет. Работает офлайн — хоть на выездном сборе без связи.</p></div>
+      <div class="feat-card blue reveal"><div class="feat-icon">🌙</div><h3>Веб и позже мобайл</h3><p>Интерфейс одинаково удобен на ноутбуке и планшете; мобильная версия — в roadmap ближайших релизов.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ДЛЯ КОМАНДЫ ================= -->
+<section class="team" id="team">
+  <div class="container team-grid">
+    <div>
+      <span class="eyebrow">Руководителям команд</span>
+      <h2>Общая библиотека задач для всей команды тренеров</h2>
+      <p class="section-sub" style="margin-bottom:32px">Один индекс — все сборники школы доступны каждому тренеру. Новые PDF добавляются за минуты, находки не теряются между занятиями.</p>
+      <ul class="check-list">
+        <li><span class="check-ico">✓</span><span><b>Единый фонд задач.</b> Тренеры перестают дублировать работу: варьяк прошлого года находится за пару кликов.</span></li>
+        <li><span class="check-ico">✓</span><span><b>Преемственность поколений.</b> Опыт выпускника-тренера остаётся в размеченной базе, а не в его личной памяти.</span></li>
+        <li><span class="check-ico">✓</span><span><b>План подготовки по темам.</b> Видно, где база сильная, а где пробел: например, «теория чисел — всего 40 задач на всю команду».</span></li>
+        <li><span class="check-ico">✓</span><span><b>Ноль затрат на инфраструктуру.</b> Не нужен сервер и администратор: запускается на обычном компьютере кабинета.</span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <table class="collection-table">
+        <thead><tr><th>Сборник</th><th>Задач</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td>Шен А. — «Геометрические неравенства»</td><td class="mono">1 240</td><td><span class="status-dot status-ok">Проиндексирован</span></td></tr>
+          <tr><td>МФТИ — сборник по алгебре и началам анализа</td><td class="mono">860</td><td><span class="status-dot status-ok">Проиндексирован</span></td></tr>
+          <tr><td>Прасолов — «Задачи по планиметрии»</td><td class="mono">1 710</td><td><span class="status-dot status-ok">Проиндексирован</span></td></tr>
+          <tr><td>Турнир городов, архив 2010–2024</td><td class="mono">—</td><td><span class="status-dot status-ing">Индексация 64%</span></td></tr>
+          <tr><td>Внутренние варьяки команды (сканы)</td><td class="mono">312</td><td><span class="status-dot status-ok">Проиндексирован</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="quote-band reveal">
+      <blockquote>«Раньше подборка десяти задач на новую тему занимала вечер листания трёх сборников. Теперь я набираю тему и сложность — и через минуту у меня готовый варьяк со ссылками на страницы.»</blockquote>
+      <cite>— тренер сборной университета, практический пилот MathFinder</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="container">
+    <span class="eyebrow">Вопросы</span>
+    <h2 style="text-align:center">Частые вопросы</h2>
+    <p class="section-sub" style="text-align:center;margin-inline:auto">Если коротко: это быстрый локальный поиск, который понимает математический текст.</p>
+    <div class="faq">
+      <details open>
+        <summary>Мои PDF-файлы куда-то отправляются?</summary>
+        <p>Нет. Индексация и поиск выполняются локально на вашем компьютере. Интернет нужен только для установки приложения.</p>
+      </details>
+      <details>
+        <summary>Работает ли со сканами, а не с текстовыми PDF?</summary>
+        <p>Да. Для сканов используется локальное OCR с поддержкой кириллицы и математической нотации. Качество распознавания зависит от скана — проблемные страницы система помечает.</p>
+      </details>
+      <details>
+        <summary>Насколько точно определяются темы?</summary>
+        <p>Базовый классификатор покрывает 12 тем олимпиадной математики и ошибается примерно на каждой десятой задаче. Любую метку можно исправить в один клик — правки сохраняются в индексе.</p>
+      </details>
+      <details>
+        <summary>Нужен ли мощный компьютер?</summary>
+        <p>Нет. Достаточно обычного ноутбука или ПК с 8 ГБ памяти. Первичная индексация большого архива — фоновая задача: можно продолжать работать.</p>
+      </details>
+      <details>
+        <summary>Когда мобильная версия?</summary>
+        <p>Веб-интерфейс уже адаптивен, а нативное мобильное приложение с офлайн-индексом — в планах ближайших релизов. Дизайн-система спроектирована под перенос компонентов 1-в-1.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ФИНАЛЬНЫЙ CTA ================= -->
+<section class="cta-final" id="cta">
+  <div class="container">
+    <div class="inner reveal">
+      <span class="eyebrow">Бесплатно · Open source core</span>
+      <h2>Ваши сборники уже ждут поиска</h2>
+      <p>Установка за две минуты. Первая индексация — пока пьёте чай.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-accent" href="#" onclick="return false">Скачать для Windows / macOS / Linux</a>
+        <a class="btn btn-ghost" href="#" onclick="return false">Написать нам</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= ПОДВАЛ ================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="#top"><span class="logo-mark">√</span>MathFinder</a>
+        <p>Локальный инструмент для тренеров и преподавателей: быстрый поиск олимпиадных задач по темам в неструктурированных PDF-сборниках.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Продукт</h4>
+          <ul>
+            <li><a href="#how">Как работает</a></li>
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#team">Для команд</a></li>
+            <li><a href="#cta">Скачать</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Ресурсы</h4>
+          <ul>
+            <li><a href="#">Дизайн-система</a></li>
+            <li><a href="#">Брендбук</a></li>
+            <li><a href="#faq">Поддержка</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MathFinder. Сделано для тех, кто готовит олимпиадников.</span>
+      <span>Страница собрана по дизайн-системе v0.1 / брендбуку v1.0</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Тёмная тема
+const btn=document.getElementById('themeBtn');
+const root=document.documentElement;
+const saved=localStorage.getItem('mf-theme');
+if(saved){root.dataset.theme=saved;}
+else if(matchMedia('(prefers-color-scheme: dark)').matches){root.dataset.theme='dark';}
+syncIcon();
+btn.addEventListener('click',()=>{
+  root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+  localStorage.setItem('mf-theme',root.dataset.theme);
+  syncIcon();
+});
+function syncIcon(){btn.textContent=root.dataset.theme==='dark'?'☀️':'🌙'}
+
+// Интерактивные чипы тем в демо
+document.querySelectorAll('#chipRow .chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('#chipRow .chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+
+// Плавное появление секций
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
