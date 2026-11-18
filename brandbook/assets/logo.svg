@@ -1,0 +1,10 @@
+<svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mf-grad" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C64DD"/>
+      <stop offset="1" stop-color="#065BAB"/>
+    </linearGradient>
+  </defs>
+  <rect width="88" height="88" rx="26" fill="url(#mf-grad)"/>
+  <path d="M20 46 L32 46 L40 64 L54 26 L68 26" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
